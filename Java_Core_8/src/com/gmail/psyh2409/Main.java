@@ -1,12 +1,31 @@
+/*
+ * Copyright (c) 1979-2023, Psyh2409 and/or its affiliates. All rights reserved.
+ * PSYH2409 PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ */
 package com.gmail.psyh2409;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/** 
+ * The Main class is created to implement the main method, the method for checking 
+ * for correct input from the console, and methods that is allowed to study 
+ * the methods and ways of working with Enums.
+ * @see Seasons
+ * @see Months
+ * @see WrongInputConsoleParametersException
+ * @author Psyh2409
+ * @since 1.8
+ */
 public class Main {
 
-	
+	/**
+	 * The main method implements the program entry, the console reading block 
+	 * (catches IOException), the input validation block (catches 
+	 * WrongInputConsoleParametersException) and the training method calls. 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		System.out.println("Enter month:");
 		String s = "";
@@ -17,7 +36,11 @@ public class Main {
 		}	
 		
 		boolean isInEnum = false;
-		isInEnum = hasInEnum(s);
+		try {
+			isInEnum = hasInEnum(s);
+		} catch (WrongInputConsoleParametersException e) {
+			e.printStackTrace();
+		}
 	        	
 		
 		if(isInEnum) {
@@ -42,8 +65,14 @@ public class Main {
 		}
 		
 	}
-
-	public static boolean hasInEnum(String s) {
+	
+	/**
+	 *  It checks the correctness of input from the console, passes  exception to a higher level.
+	 * @param String s
+	 * @return boolean
+	 * @throws WrongInputConsoleParametersException
+	 */
+	public static boolean hasInEnum(String s) throws WrongInputConsoleParametersException {
 		boolean isInEnum;
 		Months mnth = null;
 	        for (Months m : Months.values()) {
@@ -55,16 +84,23 @@ public class Main {
 	        	System.out.println("Month " + s + " is in Enum like: " + mnth);
 	        	isInEnum = true;
 	        }else  {
-	        	System.out.println("Invalid month!");
 				isInEnum = false;
+				throw new WrongInputConsoleParametersException("Invalid month!");
 	        }
 		return isInEnum;
 	}
 	
+	/**
+	 * Displays if the month entered from the console has an even number of days
+	 * @param String s
+	 */
 	public static void isEven(String s) {
 		System.out.println(Months.valueOf(s.toUpperCase()) + (Months.valueOf(s.toUpperCase()).getDays()%2==0 ? " has even number of days." : " has odd number of days."));
 	}
-
+	
+	/**
+	 *  Displays all months with an odd number of days
+	 */
 	public static void allOdd() {
 		for (int i = 0; i < Months.values().length; i++) {
 			if(Months.values()[i].getDays()%2!=0) {
@@ -72,7 +108,10 @@ public class Main {
 			}
 		}
 	}
-
+	
+	/**
+	 *  Displays all months with an even number of days
+	 */
 	public static void allEven() {
 		for (int i = 0; i < Months.values().length; i++) {
 			if(Months.values()[i].getDays()%2==0) {
@@ -80,7 +119,11 @@ public class Main {
 			}
 		}
 	}
-
+	
+	/**
+	 *  Displays all months with more days
+	 * @param String s
+	 */
 	public static void allMonthsWithMoreDays(String s) {
 		for (int i = 0; i < Months.values().length; i++) {
 			if(Months.valueOf(s.toUpperCase()).getDays() < Months.values()[i].getDays()) {
@@ -89,6 +132,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 *  Displays all months with less than the same number of days
+	 * @param String s
+	 */
 	public static void allMonthsWithLessDays(String s) {
 		for (int i = 0; i < Months.values().length; i++) {
 			if(Months.valueOf(s.toUpperCase()).getDays() > Months.values()[i].getDays()) {
@@ -97,6 +144,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 *  Prints all months with the same number of days
+	 * @param String s
+	 */
 	public static void allMonthsWithSameDays(String s) {
 		for (int i = 0; i < Months.values().length; i++) {
 			if(Months.valueOf(s.toUpperCase()).getDays() == Months.values()[i].getDays()) {
@@ -105,6 +156,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 *  Prints all months with the same season
+	 * @param String s
+	 */
 	public static void allMonthsOfSeason(String s) {
 		for (int i = 0; i < Months.values().length; i++) {
 			if(Months.valueOf(s.toUpperCase()).getSeasons() == Months.values()[i].getSeasons()) {
@@ -113,6 +168,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 *  Displays the next season
+	 * @param String s
+	 */
 	public static void nextSeason(String s) {
 		for (int i = 0; i < Seasons.values().length; i++) {
 			if(Months.valueOf(s.toUpperCase()).getSeasons() == Seasons.values()[i]) {
@@ -121,6 +180,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 *  Displays the previous season
+	 * @param String s
+	 */
 	public static void previousSeason(String s) {
 		for (int i = 0; i < Seasons.values().length; i++) {
 			if(Months.valueOf(s.toUpperCase()).getSeasons() == Seasons.values()[i]) {
@@ -128,8 +191,16 @@ public class Main {
 			}
 		}
 	}
-}
-/*Output:
+} 
+
+/* Output 1:
+Enter month:
+Lystopad
+com.gmail.psyh2409.WrongInputConsoleParametersException: Invalid month!
+	at com.gmail.psyh2409.Main.hasInEnum(Main.java:63)
+	at com.gmail.psyh2409.Main.main(Main.java:21)
+
+ * Output 2:
 Enter month:
 JaNuary
 Month JaNuary is in Enum like: Months{month=JANUARY
