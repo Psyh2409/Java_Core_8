@@ -15,23 +15,18 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
-		Months[] months = Months.values();
+		
 		boolean isInEnum = false;
-		String month = "";
-		try {
-		System.out.println("Month " + s + " is in Enum like: " + Months.valueOf(s.toUpperCase()).toString());
-		isInEnum = true;
-		}catch (IllegalArgumentException iae){
-			System.out.println("Invalid month!");
-			isInEnum = false;
-		}
+		isInEnum = hasInEnum(s);
+	        	
+		
 		if(isInEnum) {
 		System.out.println("Print all months with the same season:");
 		allMonthsOfSeason(s);
 		System.out.println("Print all months with the same number of days:");
 		allMonthsWithSameDays(s);
 		System.out.println("Display all months with less than the same number of days:");
-		allMonthsWithLassDays(s);
+		allMonthsWithLessDays(s);
 		System.out.println("Display all months with more days:");
 		allMonthsWithMoreDays(s);
 		System.out.println("Display the next season:");
@@ -46,8 +41,24 @@ public class Main {
 		isEven(s);
 		}
 		
-		
-//		System.out.println(Arrays.toString(months));
+	}
+
+	public static boolean hasInEnum(String s) {
+		boolean isInEnum;
+		Months mnth = null;
+	        for (Months m : Months.values()) {
+	            if (m.name().equalsIgnoreCase(s)) {
+	                mnth = m;
+	            }
+	        }
+	        if (mnth!=null) {
+	        	System.out.println("Month " + s + " is in Enum like: " + mnth);
+	        	isInEnum = true;
+	        }else  {
+	        	System.out.println("Invalid month!");
+				isInEnum = false;
+	        }
+		return isInEnum;
 	}
 	
 	public static void isEven(String s) {
@@ -78,7 +89,7 @@ public class Main {
 		}
 	}
 	
-	public static void allMonthsWithLassDays(String s) {
+	public static void allMonthsWithLessDays(String s) {
 		for (int i = 0; i < Months.values().length; i++) {
 			if(Months.valueOf(s.toUpperCase()).getDays() > Months.values()[i].getDays()) {
 				System.out.println(Months.values()[i]);

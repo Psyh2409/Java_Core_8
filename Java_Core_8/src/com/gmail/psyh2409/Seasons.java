@@ -6,10 +6,4 @@ SPRING,
 SUMMER,
 AUTUMN;
 	
-//	@Override
-//	   public String toString() {
-//	       return "DayOfWeek{" +
-//	               "title='" + title + '\''' +
-//	               '}';
-//	   }
 }
